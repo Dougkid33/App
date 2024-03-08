@@ -1,0 +1,7 @@
+2. Adicione as seguintes linhas:
+
+# Ignora o arquivo .env
+.env
+
+# Ignora a pasta node_modules e seu conteúdo
+node_modules
