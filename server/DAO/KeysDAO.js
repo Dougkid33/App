@@ -33,3 +33,10 @@ export const listAllKeys = async () => {
     }
 };
 
+export const updateKey = async (id, keyData) => {
+    const key = await Chave.findByPk(id);
+    if (!key) throw new Error('Chave não encontrada');
+    await key.update(keyData);
+    return key;
+}
+

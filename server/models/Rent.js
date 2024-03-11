@@ -1,14 +1,13 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from './sequelize'; // Importe a instância sequelize já configurada
-import Usuario from './Usuario'; // Importe o modelo Usuario
-import Chave from './Chave'; // Importe o modelo Chave
+import sequelize from '../sequelizeConfig.js';
+import Usuario from '../models/User.js'; // Importe o modelo Usuario
+import Chave from '../models/User.js'; // Importe o modelo Chave
 
 const Emprestimo = sequelize.define('Emprestimo', {
   ID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false
   },
   DataHoraEmprestimo: {
     type: DataTypes.DATE,

@@ -42,3 +42,12 @@ export const listAllChaves = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const updateChave = async (req, res) => {
+    try {
+        const chave = await updateKey(req.params.id, req.body);
+        res.status(200).json(chave);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
