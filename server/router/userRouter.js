@@ -11,12 +11,12 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // Rota para buscar informações de um usuário autenticado
-router.get('/me', getUserInfo);
+router.get('/buscarInfo/:id', getUserInfo);
 
 // Rota para atualizar informações de um usuário autenticado
-router.put('/me', updateUserInfo);
+router.put('/editarUser/:id', updateUserInfo);
 
 // Rota para deletar um usuário autenticado
-router.delete('/me', deleteUserAccount);
+router.delete('/deletaruser/:id', deleteUserAccount);
 
 export default router;

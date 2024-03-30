@@ -21,11 +21,21 @@ export const comparePassword = async (password, hash) => {
 };
 
 // Função atualizada para autenticação pelo campo 'user'
+// auth.js
 export const authenticateUser = async (username, password) => {
+    console.log(`Username: ${username}, Password: ${password}`); // Log para depuração
     const user = await findUserByUsername(username);
     if (!user) throw new Error('Usuário não encontrado');
-    const isPasswordValid = await comparePassword(password.trim(''), user.dataValues.password.trim(''));
+    if (!password || !user.dataValues.password) {
+        console.log(`Password: ${password}, User Password: ${user.dataValues.password}`); // Log para depuração
+        throw new Error('Senha não fornecida ou usuário sem senha');
+    }
+    const isPasswordValid = await comparePassword(password.trim(), user.dataValues.password.trim());
 
     if (!isPasswordValid) throw new Error('Senha inválida');
     return user;
 };
+
+
+
+
