@@ -36,7 +36,8 @@ const Emprestimo = sequelize.define('Emprestimo', {
       model: Chave, // Referência ao modelo Chave
       key: 'ID' // Campo de referência na tabela Chave
     }
-  }
+  },
+
 }, {
   tableName: 'emprestimo', // Nome da tabela
   timestamps: false // Não cria colunas `createdAt` e `updatedAt`

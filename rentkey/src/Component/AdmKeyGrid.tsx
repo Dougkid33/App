@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
 interface Key {
-    id: number;
+    ID: number;
     SalaDaChave: string;
     Descricao: string;
     SituacaoEmprestimo: boolean;
@@ -46,25 +46,25 @@ function AdmKeyGrid() {
         fetchKeys();
     }, [enqueueSnackbar]);
 
-    const handleEdit = (id: number, event: any) => {
-        event.stopPropagation();
+    const handleEdit = (id: number,) => {
+ 
         console.log('ID a ser Editado:', id);
-        const keyToEdit = keys.find(key => key.id === id);
+        const keyToEdit = keys.find(key => key.ID === id);
         if (keyToEdit) {
             navigate('/adicionar-chave', { state: { key: keyToEdit } });
         }
     };
 
-    const handleSelectKey = (id: number | null) => {
+    const handleSelectKey = (id: number ) => {
         setSelectedKey(id);
     };
 
-    const handleDelete = async (id: number, event: any) => {
-        event.stopPropagation();
+    const handleDelete = async (id: number) => {
+
         console.log('ID a ser deletado:', id);
         console.log(keys);
 
-        const keyToDelete = keys.find(key => key.id === id);
+        const keyToDelete = keys.find(key => key.ID === id);
         const confirmDelete = window.confirm("Tem certeza que deseja deletar esta chave?");
 
         if (confirmDelete && keyToDelete) {
@@ -82,7 +82,7 @@ function AdmKeyGrid() {
                     throw new Error(errorData.message || 'Erro ao deletar a chave');
                 }
 
-                setKeys(currentKeys => currentKeys.filter(key => key.id !== id));
+                setKeys(currentKeys => currentKeys.filter(key => key.ID !== id));
                 enqueueSnackbar('Chave deletada com sucesso.', { variant: 'success' });
             } catch (error) {
                 console.error('Erro ao deletar a chave:', error);
@@ -90,6 +90,22 @@ function AdmKeyGrid() {
             }
         }
     };
+    const rows = [];
+    for (const key of keys) {
+        rows.push(
+          <TableRow key={key.ID} onClick={() => handleSelectKey(key.ID)} style={{ cursor: 'pointer', backgroundColor: selectedKey === key.ID? 'lightblue' : 'white' }}>
+            <TableCell>{key.SalaDaChave}</TableCell>
+            <TableCell>{key.Descricao}</TableCell>
+            <TableCell align="left">
+              {key.SituacaoEmprestimo ? <HighlightOffIcon color="error" /> : <CheckCircleOutlineIcon color="success" />}
+            </TableCell>
+            <TableCell align="left">
+              <IconButton onClick={() => handleEdit(key.ID)}><EditIcon /></IconButton>
+              <IconButton onClick={() => handleDelete(key.ID)}><DeleteIcon /></IconButton>
+            </TableCell>
+          </TableRow>
+        );
+      }
 
     return (
         <Box sx={{ marginTop: '100px', textAlign: 'center', marginRight: '300px' }}> {/* Adicionando espaço acima da tabela */}
@@ -109,19 +125,7 @@ function AdmKeyGrid() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {keys.map((key) => (
-                            <TableRow key={key.id} onClick={() => handleSelectKey(key.id)} style={{ cursor: 'pointer', backgroundColor: selectedKey === key.id ? 'lightblue' : 'white' }}>
-                                <TableCell>{key.SalaDaChave}</TableCell>
-                                <TableCell>{key.Descricao}</TableCell>
-                                <TableCell align="left">
-                                    {key.SituacaoEmprestimo ? <HighlightOffIcon color="error" /> : <CheckCircleOutlineIcon color="success" />}
-                                </TableCell>
-                                <TableCell align="left">
-                                    <IconButton onClick={(e) => handleEdit(key.id, e)}><EditIcon /></IconButton>
-                                    <IconButton onClick={(e) => handleDelete(key.id, e)}><DeleteIcon /></IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                    {rows}
                     </TableBody>
                 </Table>
             </TableContainer>

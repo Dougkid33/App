@@ -6,6 +6,7 @@ import ReservaForm from './Component/ReservaForm';
 import AddUserForm from './Component/AddUserForm';
 import Header from './Component/Header'; 
 import AdmKeyGrid from './Component/AdmKeyGrid';
+import EmprestimosList from './Component/EmprestimoList';
 import { SnackbarProvider } from 'notistack';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/reservar" element={<ReservaForm />} />
           <Route path="/adicionar-usuario" element={<AddUserForm />} />
           <Route path="/adm-chaves" element={<AdmKeyGrid />} />
+          <Route path="/emprestimos" element={<EmprestimosList />} />
         </Routes>
       </SnackbarProvider>
     </BrowserRouter>

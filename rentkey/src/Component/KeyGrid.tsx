@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
@@ -21,9 +21,15 @@ function KeyGrid() {
  }, []);
 
  return (
-    <TableContainer component={Paper} sx={{ padding: '16px' }}>
+  <Box sx={{ marginTop: '100px', textAlign: 'center', marginRight: '300px' }}>
+    <TableContainer component={Paper} sx={{ maxWidth: '80%', overflowX: 'auto', padding: '16px' }}>
       <Table sx={{ minWidth: '80%' }} aria-label="tabela de chaves">
         <TableHead>
+        <TableRow>
+                            <TableCell colSpan={4}>
+                                <h1>Tabela de Chaves</h1>
+                            </TableCell>
+                        </TableRow>
           <TableRow>
             <TableCell>Sala da Chave</TableCell>
             <TableCell>Descrição</TableCell>
@@ -52,6 +58,7 @@ function KeyGrid() {
         </TableBody>
       </Table>
     </TableContainer>
+  </Box>
  );
 }
 

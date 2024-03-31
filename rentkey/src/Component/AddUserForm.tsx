@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, TextField, MenuItem, FormControl, InputLabel, Button, Box, Select, SelectChangeEvent, Typography, Container } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Usuario {
     id: number;
@@ -14,6 +14,9 @@ interface Usuario {
     cargo: string;
     tipoUsuario: 'Administrador' | 'Aluno' | 'Professor';
 }
+interface LocationState {
+    user: Usuario;
+  }
 const AddUserForm: React.FC = () => {
     const [usuario, setUsuario] = useState<Usuario>({
         id: 0,
@@ -26,6 +29,14 @@ const AddUserForm: React.FC = () => {
         cargo: '',
         tipoUsuario: 'Administrador',
     });
+    const location = useLocation();
+    useEffect(() => {
+        const state = location.state as LocationState | null; // Uso de 'as' para tipagem, assumindo que pode ser nulo
+        if (state && state.user) {
+            setUsuario(state.user);
+        }
+      }, [location.state]);
+
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const buttonStyle = {
@@ -48,6 +59,8 @@ const AddUserForm: React.FC = () => {
         marginY: '10px', // Adiciona margem acima e abaixo para espaçamento entre os botões
       };
 
+
+
     const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setUsuario(prevState => ({ ...prevState, [name]: isNaN(+value) ? value : +value }));
@@ -61,9 +74,9 @@ const AddUserForm: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        const endpoint = usuario ?` http://localhost:3333/api/usuario/editarUser/${usuario.id}` : `http://localhost:3333/api/usuario/register`;
+        const method = usuario ? 'PUT' : 'POST';
         const sexo = usuario.sexo === 'Masculino' ? 'M' : usuario.sexo === 'Feminino' ? 'F' : 'Outro';
-
 
         // Preparando os dados do usuário para envio
         const userData = {
@@ -78,8 +91,8 @@ const AddUserForm: React.FC = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3333/api/usuario/register', {
-                method: 'POST',
+            const response = await fetch(endpoint, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -92,13 +105,13 @@ const AddUserForm: React.FC = () => {
             }
 
             //const data = await response.json();
-            enqueueSnackbar('Usuário adicionado com Sucesso!', { variant: 'success' });
+            enqueueSnackbar(userData ? 'Usuário atualizado com sucesso!' : 'Usuário cadastrado com sucesso!', { variant: 'success' });
 
 
             navigate('/dashboard');
 
         } catch (error) {
-            enqueueSnackbar('Erro ao adicionar usuário', { variant: 'error' });
+            enqueueSnackbar('Erro na operação com o  usuário', { variant: 'error' });
         }
     };
 
@@ -106,7 +119,7 @@ const AddUserForm: React.FC = () => {
 
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
             <Card sx={{ mt: 8, padding: 3 }}>
-                <Typography component="h1" variant="h5" sx={{ mb: 2 }}>Adicionar Usuário</Typography>
+            <Typography variant="h5" mb={2}>{usuario ? "Editar Chave" : "Adicionar Chave"}</Typography>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
                         <Box marginBottom={2}>

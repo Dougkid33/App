@@ -56,9 +56,14 @@ export const updateUserInfo = async (req, res) => {
 
 // Função para deletar um usuário autenticado
 export const deleteUserAccount = async (req, res) => {
+   
  try {
-    await deleteUser(req.user.id); // Supondo que 'req.user' contém o usuário autenticado
-    res.status(204).end();
+   const { id } = req.params;
+   const numberOfDestroyedRows = await deleteUser(id);
+   if (numberOfDestroyedRows === 0) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+  }
+  res.status(200).json({ message: 'Usuário deletada com sucesso' });
  } catch (error) {
     res.status(500).json({ error: error.message });
  }

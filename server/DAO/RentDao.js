@@ -44,3 +44,15 @@ export const updateRent = async (id, rentData) => {
     await rent.update(rentData);
     return rent;
 }
+
+export const buscarPorUsuario = async (userId) => {
+    try {
+        const rents = await Emprestimo.findAll({
+            where: { Usuario_ID: userId },
+        });
+        return rents;
+    } catch (error) {
+        console.error('Erro ao buscar empréstimos por usuário:', error);
+        throw error;
+    }
+}
