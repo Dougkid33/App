@@ -9,7 +9,7 @@ function LoginPage() {
   const [error, setError] = useState(''); // Estado para armazenar mensagens de erro
   const navigate = useNavigate();
 
-const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(''); // Limpa erros anteriores
     const endpoint = 'http://localhost:3333/api/usuario/login';
@@ -29,30 +29,26 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       }
 
       const { token, user } = await response.json();
-      //const {user} = await response.json();
-
       localStorage.clear(); // Limpa o localStorage antes de salvar novos dados
       localStorage.setItem('token', token);
       localStorage.setItem('userId', user.id);
-        console.log(user);
-      
       navigate('/dashboard'); // Redireciona para a dashboard
     } catch (error) {
-        console.error('Erro na autenticação:', error);
-        //setError(error.message); // Define a mensagem de erro para exibição
+      console.error('Erro na autenticação:', error);
+      //setError(error); // Define a mensagem de erro para exibição
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ mt: 8 }}>
       <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
         Login
       </Typography>
       <Box>
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ mt: 2, alignItems: 'center', }}>
           <CardContent>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>} {/* Exibe erros para o usuário */}
+              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
               <TextField
                 margin="normal"
                 required
@@ -81,7 +77,26 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  fontSize: '15px',
+                  fontFamily: 'Arial',
+                  width: '140px',
+                  height: '50px',
+                  borderWidth: '1px',
+                  color: 'white', // Garante que o texto seja branco
+                  alignItems: 'center',
+                  borderColor: '#333',
+                  fontWeight: 'bold',
+                  borderRadius: '8px',
+                  boxShadow: '0px 10px 14px -7px rgba(0, 0, 0, 0.75)',
+                  textShadow: '0px 1px 0px #000',
+                  background: 'linear-gradient(#333, #111)',
+                  '&:hover': {
+                      background: 'linear-gradient(#111, #333)',
+                  },
+                  // Para a variação dark
+          
+              }} 
               >
                 Sign In
               </Button>

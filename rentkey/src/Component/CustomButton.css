@@ -1,0 +1,36 @@
+.button {
+    background-color: #ffffff00;
+    color: #fff;
+    width: 8.5em;
+    height: 2.9em;
+    border: #3654ff 0.2em solid;
+    border-radius: 11px;
+    text-align: right;
+    transition: all 0.6s ease;
+    position: relative; /* Adicionando a posição relativa */
+    overflow: hidden; /* Adicionando o overflow hidden para ocultar o ícone que ultrapassa o botão */
+  }
+  
+  .button:hover {
+    background-color: #3654ff;
+    cursor: pointer;
+  }
+  
+  .button svg {
+    width: 1.6em;
+    margin: -0.2em 0.8em 1em;
+    position: absolute;
+    top: 50%; /* Posicionando o ícone no meio verticalmente */
+    left: 0.8em; /* Ajustando o posicionamento horizontal */
+    transform: translateY(-50%); /* Centralizando verticalmente */
+    transition: all 0.6s ease;
+  }
+  
+  .button:hover svg {
+    transform: translateX(5px);
+  }
+  
+  .text {
+    margin: 0 1.5em;
+  }
+  

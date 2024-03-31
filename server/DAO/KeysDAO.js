@@ -40,3 +40,20 @@ export const updateKey = async (id, keyData) => {
     return key;
 }
 
+export const updateKeyStatus = async (keyId, status) => {
+    try {
+        const chave = await Chave.findByPk(keyId);
+        if (!chave) {
+            throw new Error('Chave não encontrada');
+        }
+        // Aqui fazemos a conversão baseada na lógica "trinity"
+        const statusValue = status ? 0 : 1; // Aqui ajustamos: true (disponível) vira 0, false (emprestada) vira 1
+        await chave.update({ SituacaoEmprestimo: statusValue });
+
+        return chave;
+    } catch (error) {
+        console.error('Erro ao atualizar status da chave:', error);
+        throw error;
+    }
+};
+

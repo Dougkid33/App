@@ -3,32 +3,31 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-// Definindo a interface Key
 interface Key {
-  id: number;
-  SalaDaChave: string;
-  Descricao: string;
-  SituacaoEmprestimo: boolean; // Assumindo que 'reservado' é um booleano
+ id: number;
+ SalaDaChave: string;
+ Descricao: string;
+ SituacaoEmprestimo: boolean;
 }
 
 function KeyGrid() {
-    const [keys, setKeys] = useState<Key[]>([]);
+ const [keys, setKeys] = useState<Key[]>([]);
 
-    useEffect(() => {
-        fetch('http://localhost:3333/api/chaves/listarTodasChaves')
-            .then(response => response.json())
-            .then(data => setKeys(data))
-            .catch(error => console.error('Erro ao buscar chaves:', error));
-    }, []);
+ useEffect(() => {
+    fetch('http://localhost:3333/api/chaves/listarTodasChaves')
+      .then(response => response.json())
+      .then(data => setKeys(data))
+      .catch(error => console.error('Erro ao buscar chaves:', error));
+ }, []);
 
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="tabela de chaves">
+ return (
+    <TableContainer component={Paper} sx={{ padding: '16px' }}>
+      <Table sx={{ minWidth: '80%' }} aria-label="tabela de chaves">
         <TableHead>
           <TableRow>
             <TableCell>Sala da Chave</TableCell>
             <TableCell>Descrição</TableCell>
-            <TableCell align="right">Situação do Empréstimo</TableCell>
+            <TableCell align="left">Situação do Empréstimo</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -41,11 +40,11 @@ function KeyGrid() {
                 {key.SalaDaChave}
               </TableCell>
               <TableCell>{key.Descricao}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {key.SituacaoEmprestimo ? (
-                  <HighlightOffIcon color="error" />
+                 <HighlightOffIcon color="error" />
                 ) : (
-                  <CheckCircleOutlineIcon color="success" />
+                 <CheckCircleOutlineIcon color="success" />
                 )}
               </TableCell>
             </TableRow>
@@ -53,7 +52,7 @@ function KeyGrid() {
         </TableBody>
       </Table>
     </TableContainer>
-  );
+ );
 }
 
 export default KeyGrid;

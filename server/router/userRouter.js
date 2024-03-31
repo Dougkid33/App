@@ -1,6 +1,6 @@
 // routes/userRoutes.js
 import { Router } from "express";
-import { registerUser, loginUser, getUserInfo, updateUserInfo, deleteUserAccount } from '../Controller/UserController.js';
+import { registerUser, loginUser, getUserInfo, updateUserInfo, deleteUserAccount, listAllUsers } from '../Controller/UserController.js';
 
 const router = Router();
 
@@ -18,5 +18,8 @@ router.put('/editarUser/:id', updateUserInfo);
 
 // Rota para deletar um usuário autenticado
 router.delete('/deletaruser/:id', deleteUserAccount);
+
+// Rota para listar todos os usuários
+router.get('/listarUsuarios', listAllUsers);
 
 export default router;

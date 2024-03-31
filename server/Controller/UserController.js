@@ -1,5 +1,5 @@
 // userController.js
-import { createUser,  findByID, updateUser, deleteUser } from '../DAO/UserDao.js';
+import { createUser,  findByID, updateUser, deleteUser, listAllUser } from '../DAO/UserDao.js';
 import { generateToken, authenticateUser } from '../auth.js';
 
 // Função para registrar um novo usuário
@@ -59,6 +59,16 @@ export const deleteUserAccount = async (req, res) => {
  try {
     await deleteUser(req.user.id); // Supondo que 'req.user' contém o usuário autenticado
     res.status(204).end();
+ } catch (error) {
+    res.status(500).json({ error: error.message });
+ }
+};
+
+// Função para listar todos os usuários
+export const listAllUsers = async (req, res) => {
+ try {
+    const users = await listAllUser();
+    res.json(users);
  } catch (error) {
     res.status(500).json({ error: error.message });
  }

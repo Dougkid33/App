@@ -2,12 +2,19 @@ import Emprestimo from "../models/Rent.js";
 
 export const createRent = async (rentData) => {
     if (!rentData.Chave_ID && !rentData.Usuario_ID) {
-        throw new Error('O ID da Chave e do Usuário para o  empréstimo é obrigatório.');
+        throw new Error('O ID da Chave e do Usuário para o empréstimo é obrigatório.');
     }
 
-    const rent = await Emprestimo.create(rentData);
+    // Definindo status como true por padrão para todos os novos empréstimos
+    const rentWithDefaultStatus = {
+        ...rentData,
+        Status: true, // Garante que o status seja sempre true ao criar um novo empréstimo
+    };
+
+    const rent = await Emprestimo.create(rentWithDefaultStatus);
     return rent;
 };
+
 
 export const getRent = async (id) => {
     const rent = await Emprestimo.findByPk(id);

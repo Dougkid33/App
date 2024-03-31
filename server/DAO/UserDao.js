@@ -37,4 +37,14 @@ export const deleteUser = async (id) => {
  await user.destroy();
 };
 
+export const listAllUser = async () => {
+  try {
+      const user = await User.findAll();
+      return user;
+  } catch (error) {
+      console.error('Erro ao listar todos os usuários:', error);
+      throw error; // Ou retorne uma resposta de erro apropriada, dependendo do seu contexto
+  }
+};
+
 // UserDao.js

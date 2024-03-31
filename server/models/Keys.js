@@ -15,7 +15,11 @@ const Chave = sequelize.define('Chave', {
   SituacaoEmprestimo: {
     type: DataTypes.BOOLEAN,
     allowNull: false
-  }
+  },
+  Descricao: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
 }, {
   tableName: 'chave', // Nome da tabela
   timestamps: false // Não cria colunas `createdAt` e `updatedAt`

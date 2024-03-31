@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, Button } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom';
 import './UserInfoSidebar.css';
 
 interface UserInfo {
@@ -16,21 +17,43 @@ interface UserInfo {
 function UserInfoSidebar() {
   const [userInfo, setUserInfo] = useState<UserInfo>({});
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
   const sidebarStyle = {
-    width: isExpanded ? '300px' : '50px', // Torna o sidebar mais estreito quando não expandido
-    transition: 'width 0.3s', // Transição suave da largura
-    overflow: 'hidden', // Esconde o conteúdo não expandido
-    cursor: 'pointer', // Indica que o elemento é interativo
-    position: 'fixed', // Mantém o sidebar fixo à esquerda
-    left: 0,
+    width: isExpanded ? '300px' : '50px',
+    transition: 'width 0.3s',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    position: 'fixed',
+    right: 0, // Altera de 'left: 0;' para 'right: 0;'
     top: 0,
-    height: '100%', // Ocupa a altura total da tela
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center', // Centraliza os ícones/itens no sidebar
-    backgroundColor: '#FFF', // Ajuste conforme necessário
-    zIndex: 1000, // Garante que o sidebar fique acima de outros conteúdos
+    alignItems: 'center',
+    background: 'linear-gradient(0deg, rgba(195,34,193,1) 0%, rgba(45,61,253,1) 100%)',
+    zIndex: 1000
+   };
+   
+   const buttonStyle = {
+    fontSize: '15px',
+    fontFamily: 'Arial',
+    width: '140px',
+    height: '50px',
+    borderWidth: '1px',
+    color: 'white',
+    alignItems: 'center',
+    borderColor: '#333',
+    fontWeight: 'bold',
+    borderRadius: '8px',
+    boxShadow: '0px 10px 14px -7px rgba(0, 0, 0, 0.75)',
+    textShadow: '0px 1px 0px #000',
+    background: 'linear-gradient(#333, #111)',
+    '&:hover': {
+        background: 'linear-gradient(#111, #333)',
+    },
+    marginY: '10px', // Adiciona margem acima e abaixo para espaçamento entre os botões
   };
+  
   const arrowStyle = {
     transform: isExpanded ? 'rotate(180deg)' : 'none',
     transition: 'transform 0.3s',
@@ -73,21 +96,49 @@ function UserInfoSidebar() {
     >
       <ArrowForwardIosIcon sx={arrowStyle} />
       {isExpanded && (
-      <Card className="card" sx={{ minWidth: '100%', margin: '10px' }}>
-        <Card className="card2" sx={{ minWidth: '100%', margin: '10px' }}>
-          <CardContent sx={{ '& > *': { marginBottom: 2 } }}>
-            <Typography variant="h6"> Usuário</Typography>
-            <Typography>NOME: {userInfo.nome}</Typography>
-            <Typography>IDADE: {userInfo.idade}</Typography>
-            <Typography>SEXO: {userInfo.sexo}</Typography>
-            <Typography>E-MAIL: {userInfo.email}</Typography>
-            <Typography>Username: {userInfo.user}</Typography>
-            <Typography>Cargo: {userInfo.cargo}</Typography>
-            <Typography>Tipo de Usuário: {userInfo.tipoUsuario}</Typography>
+        <Card className="card" sx={{ minWidth: '20%', margin: '20px' }}>
+          <CardContent sx={{ '& > *': { marginBottom: 2 } }} className="card">
+            <div className="img"></div>
+            <Typography> <strong>Nome:</strong> {userInfo.nome}</Typography>
+            <Typography><strong>Idade:</strong> {userInfo.idade}</Typography>
+            <Typography><strong>Sexo</strong>: {userInfo.sexo}</Typography>
+            <Typography><strong>E-MAIL:</strong> {userInfo.email}</Typography>
+            <Typography><strong>Username</strong>: {userInfo.user}</Typography>
+            <Typography><strong>Cargo</strong>: {userInfo.cargo}</Typography>
+            <Typography><strong>Tipo de Usuário:</strong>{userInfo.tipoUsuario}</Typography>
           </CardContent>
         </Card>
-      </Card>
       )}
+      {isExpanded && userInfo.tipoUsuario === "Administrador" && (
+        <Box sx={{ padding: '10px', display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Button 
+          variant="contained"
+          // Adicione esta linha
+          sx={{...buttonStyle}}
+          onClick={() => navigate('/adicionar-usuario')}
+        >
+          Adicionar Usuário
+        </Button>
+          <Button
+            variant="contained"
+            
+            onClick={() => navigate('/adicionar-chave')}
+            sx={{...buttonStyle}}
+          >
+            Adicionar Chave
+          </Button>
+
+          
+      </Box>
+      )}
+      <Button
+            variant="contained"
+            
+            onClick={() => navigate('/reservar')}
+            sx={{...buttonStyle}}
+          >
+            Reservar
+          </Button>
     </Box>
   );
 }
