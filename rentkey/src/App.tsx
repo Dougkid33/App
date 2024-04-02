@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
      
       <SnackbarProvider maxSnack={3}>
-      {location.pathname !== "/" && <Header />}
+        <Header />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />

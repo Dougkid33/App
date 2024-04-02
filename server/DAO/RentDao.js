@@ -38,12 +38,20 @@ export const listAllRents = async () => {
     }
 }   
 
-export const updateRent = async (id, rentData) => { 
+export const updateRent = async (id, rentData) => {
     const rent = await Emprestimo.findByPk(id);
     if (!rent) throw new Error('Empréstimo não encontrado');
-    await rent.update(rentData);
+    
+    // Forçar a atualização do Status para false
+    const updatedRentData = {
+        ...rentData,
+        Status: false
+    };
+
+    await rent.update(updatedRentData);
     return rent;
 }
+
 
 export const buscarPorUsuario = async (userId) => {
     try {

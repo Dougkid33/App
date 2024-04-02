@@ -8,7 +8,7 @@ interface Emprestimo {
     DataHoraEmprestimo: string;
     DataHoraDevolucao: string | null;
     Usuario_ID: number;
-    status: boolean;
+    Status: boolean;
 }
 
 export default function EmprestimosList() {
@@ -72,7 +72,7 @@ export default function EmprestimosList() {
                         </Typography>
                         <List>
                             {emprestimos
-                                .filter((emprestimo) => emprestimo.status === true)
+                                .filter((emprestimo) => emprestimo.Status === true)
                                 .map((emprestimo) => (
                                     <ListItem key={emprestimo.ID} divider>
                                         <ListItemText
